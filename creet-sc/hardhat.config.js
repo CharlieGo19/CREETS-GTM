@@ -1,0 +1,72 @@
+const path = require("path");
+require("dotenv").config({
+  path: path.resolve(__dirname, "../.env")
+});
+require("module-alias/register");
+require("@nomiclabs/hardhat-waffle");
+
+const shell = require("shelljs");
+const { TokenId } = require("@hashgraph/sdk");
+
+const {
+  Network,
+  Config,
+  Hashgraph,
+  SDK: { ContractFunctionParameters },
+} = require("hashgraph-support");
+
+/**
+ * Leave this as a helper for deploying a smart contract,
+ */
+task("deploy", "Deploy a hedera contract")
+  .addParam(
+    "contract",
+    "Name of contract that you wish to deploy to Hedera, from your /contracts folder"
+  )
+  .addOptionalParam(
+    "destination",
+    "The network that you are deploying to. Currently supporting previewnet/testnet",
+    ""
+  )
+  .setAction(async (args) => { 
+    const destinationNetwork = args.destination || Config.network;
+    const client = Network.getNodeNetworkClient(destinationNetwork);
+
+    const contractInitialisation = {
+      contractName: args.contract,
+      // Optional, injected into the constructor: if we need to associate an address with the contract | i.e. for treasury of hbars/usdc etc.
+      /* constructorParams: new ContractFunctionParameters().addAddress(
+        TokenId.fromString(Config.tokenId).toSolidityAddress()
+      ),*/
+    };
+
+    const contractId = await Hashgraph(client).contract.create(
+      contractInitialisation
+    );
+
+    // Check that contract test exist
+    shell.exec(`bin/check-for-contract-test ${args.contract.toUpperCase()}`);
+
+    // Inject the latest deployed contract ID into the env
+    shell.exec(
+      `bin/update-contract-id ${args.contract.toUpperCase()} ${contractId.toString()}`
+    );
+
+    console.log("Contract id: " + contractId.toString());
+    });
+
+
+// You need to export an object to set up your config
+// Go to https://hardhat.org/config/ to learn more
+
+/**
+ * @type import('hardhat/config').HardhatUserConfig
+ */
+module.exports = {
+  solidity: "0.8.0",
+  // NOTE: Adding the optimiser by default, may remove later
+  optimizer: {
+    enabled: true,
+    runs: 1000,
+  },
+};
