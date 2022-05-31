@@ -25,6 +25,7 @@ func CreateTestCreet(client *hedera.Client, acc hedera.AccountID, tknName, tknSy
 	if err != nil {
 		panic("Error generating treasury key.")
 	}
+	var trsyPubk hedera.PublicKey = trsyPrivk.PublicKey()
 
 	// Set token transaction parameters.
 	tknInitTxn.SetTokenName(tknName)
@@ -41,7 +42,6 @@ func CreateTestCreet(client *hedera.Client, acc hedera.AccountID, tknName, tknSy
 		panic("Error intiliasing transaction.")
 	}
 
-	var trsyPubk hedera.PublicKey = trsyPrivk.PublicKey()
 	txnResp, err := tknInitTxn.Sign(admnPrivk).Sign(trsyPrivk).Execute(client)
 	if err != nil {
 		panic(err)
@@ -100,5 +100,5 @@ func main() {
 	var client *hedera.Client = hedera.ClientForTestnet()
 	client.SetOperator(acc, privk)
 
-	CreateTestCreet(client, acc, tknName, tknSym, uint(tknDec)) //Uncomment to deploy new TCREET.
+	CreateTestCreet(client, acc, tknName, tknSym, uint(tknDec))
 }
