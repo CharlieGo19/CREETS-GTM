@@ -1,2 +1,2 @@
-# CREETS-MTG
-CREETS: Magic the Gathering
+# CREETS-GTM
+CREETS: Gathering the Magic
