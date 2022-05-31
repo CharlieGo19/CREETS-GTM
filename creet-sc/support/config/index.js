@@ -1,0 +1,15 @@
+"use strict";
+
+const {
+  HEDERA_NETWORK,
+  HEDERA_TNET_ACCOUNT_ID,
+  HEDERA_TNET_ACCOUNT_PRIVATE_KEY,
+  HEDERA_TNET_CREET_TOKEN_ADDRESS,
+} = process.env;
+
+module.exports = {
+  network: HEDERA_NETWORK.toLowerCase(),
+  accountId: HEDERA_TNET_ACCOUNT_ID,
+  privateKey: HEDERA_TNET_ACCOUNT_PRIVATE_KEY,
+  tokenId: HEDERA_TNET_CREET_TOKEN_ADDRESS
+};
