@@ -32,7 +32,7 @@ const getNodeNetworkClient = (networkEnv = TESTNET) => {
 
   if (Config.accountId == null || Config.privateKey == null) {
     throw new Error(
-      "Environment variables 'HEDERA_TNET_ACCOUNT_ID' and 'HEDERA_TNET_PRIVATE_KEY' must be present"
+      "Environment variables 'HEDERA_ACCOUNT_ID' and 'HEDERA_PRIVATE_KEY' must be present"
     );
   }
 

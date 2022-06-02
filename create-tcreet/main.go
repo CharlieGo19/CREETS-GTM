@@ -66,21 +66,21 @@ func main() {
 		panic("Couldn't load .env file.")
 	}
 
-	acc, err := hedera.AccountIDFromString(os.Getenv("HEDERA_TNET_ACCOUNT_ID"))
+	acc, err := hedera.AccountIDFromString(os.Getenv("HEDERA_ACCOUNT_ID"))
 	if err != nil {
 		panic("Error parsing AccountID.")
 	}
 
-	privk, err := hedera.PrivateKeyFromString(os.Getenv("HEDERA_TNET_ACCOUNT_PRIVATE_KEY"))
+	privk, err := hedera.PrivateKeyFromString(os.Getenv("HEDERA_ACCOUNT_PRIVATE_KEY"))
 	if err != nil {
 		panic("Error parsing Account Private Key.")
 	}
 
-	/*pubk, err := hedera.PublicKeyFromString(os.Getenv("HEDERA_TNET_ACCOUNT_PUBLIC_KEY"))
+	/*pubk, err := hedera.PublicKeyFromString(os.Getenv("HEDERA_ACCOUNT_PUBLIC_KEY"))
 	if err != nil {
 		panic("Error parsing Account Public Key.")
 	}
-	tknIdStr := os.Getenv("HEDERA_TNET_CREET_TOKEN_ADDRESS")
+	tknIdStr := os.Getenv("HEDERA_CREET_TOKEN_ADDRESS")
 	var tknId hedera.TokenID
 	if len(tknIdStr) > 0 {
 		tknId, err = hedera.TokenIDFromString(tknIdStr)
@@ -89,10 +89,10 @@ func main() {
 		}
 	}*/
 
-	var tknName string = os.Getenv("HEDERA_TNET_CREET_TOKEN_NAME")
-	var tknSym string = os.Getenv("HEDERA_TNET_CREET_TOKEN_SYMBOL")
+	var tknName string = os.Getenv("HEDERA_CREET_TOKEN_NAME")
+	var tknSym string = os.Getenv("HEDERA_CREET_TOKEN_SYMBOL")
 
-	tknDec, err := strconv.ParseUint(os.Getenv("HEDERA_TNET_CREET_TOKEN_DECIMALS"), 10, 32)
+	tknDec, err := strconv.ParseUint(os.Getenv("HEDERA_CREET_TOKEN_DECIMALS"), 10, 32)
 	if err != nil {
 		panic("Error parsing Token decimal precision.")
 	}
